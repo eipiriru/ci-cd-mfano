@@ -18,14 +18,14 @@ jobs:
           
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
         run: |
-        changes=$(git diff --name-only main~ main folder1/)
-        echo $changes
-        echo "Try Looping"
-        for i in $changes
-          do
-            echo "i"
-            echo $i
-          done
+          changes=$(git diff --name-only main~ main folder1/)
+          echo $changes
+          echo "Try Looping"
+          for i in $changes
+            do
+              echo "i"
+              echo $i
+            done
 
 
       # - uses: actions/checkout@v3
