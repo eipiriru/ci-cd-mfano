@@ -17,4 +17,4 @@ jobs:
           fetch-depth: 0
           
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
-        run: git diff --name-only --diff-filter=d main~ main
+        run: git diff
