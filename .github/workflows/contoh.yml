@@ -1,0 +1,14 @@
+name: contoh
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cek_pushan:
+    name: cek_pushan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+      run: echo "Here is a test"
