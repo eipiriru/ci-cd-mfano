@@ -9,5 +9,11 @@ jobs:
   cek_pushan:
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: echo "Here is a test"
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Modified files
+        run: |
+          git diff --name-only --diff-filter=d main~ main
