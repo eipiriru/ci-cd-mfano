@@ -17,9 +17,9 @@ jobs:
           fetch-depth: 0
           
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
+        uses: appleboy/ssh-action@master
         run: |
-          echo "${{ secrets.TES_VAR }}"
-          tes_var=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kesatu[]')
+          tes_var=$(echo "{\"server\": [{\"server1\":{\"host\":\"host1\",\"username\":\"username1\"}},{\"server2\":{\"host\":\"host2\",\"username\":\"username2\"}}]}" | jq -r '.kesatu[]')
           for x in $tes_var
             do
               echo $x
@@ -30,6 +30,27 @@ jobs:
             do
               echo $i
             done
+
+      # - name: Update db
+      #   run: |
+      #     access_server=$(echo "${{ secrets.SERVER }}" | jq -r '.server[]')
+      #     changes=$(git diff --name-only main~ main folder1/)
+
+      #     for s in $access_server
+      #       do
+      #         with:
+      #           host: $s['host']
+      #           username: ${{ secrets.VULTR_APPOINTMENT_USERNAME }}
+      #           key: ${{ secrets.VULTR_APPOINTMENT_SSH_PRIVATE_KEY }}
+      #           password: ${{ secrets.VULTR_APPOINTMENT_PASSWORD }}
+      #           port: 9669
+      #           script: |
+      #             cd /var/www/html/dashboardrsudkayen
+      #             git pull origin master
+      #             cd /var/www/html/dashboardrsunirmala
+      #             git pull origin master
+      #             cd /var/www/html/dashboardrsuad
+      #             git pull origin master
 
 
       # - uses: actions/checkout@v3
