@@ -20,11 +20,11 @@ jobs:
         run: |
           echo "${{ vars.TES_VAR }}"
           tes_var="${{ vars.TES_VAR }}"
-          for x in tes_var
+          for x in $tes_var
             do
               echo $x
             done
-            
+
           changes=$(git diff --name-only main~ main folder1/)
           for i in $changes
             do
