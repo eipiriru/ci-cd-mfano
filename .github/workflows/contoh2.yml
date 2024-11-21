@@ -28,7 +28,7 @@ jobs:
             do
               echo $index
               echo $x
-              echo $tes_var2[$index]
+              echo ${tes_var2[$index]}
               ((index++))
             done
 
