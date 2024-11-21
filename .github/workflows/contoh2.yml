@@ -18,7 +18,7 @@ jobs:
           
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
         run: |
-          echo ${{ secrets.TES_VAR }}
+          echo ${{ env.TES_VAR }}
           changes=$(git diff --name-only main~ main folder1/)
           for i in $changes
             do
