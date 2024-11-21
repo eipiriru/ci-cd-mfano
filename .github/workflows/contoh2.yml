@@ -19,10 +19,14 @@ jobs:
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
         uses: appleboy/ssh-action@master
         run: |
-          tes_var=$(echo "{\"server\": [{\"server1\":{\"host\":\"host1\",\"username\":\"username1\"}},{\"server2\":{\"host\":\"host2\",\"username\":\"username2\"}}]}" | jq -r '.kesatu[]')
+          tes_var=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kesatu[]')
+          tes_var2=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kedua[]')
+          index=0
           for x in $tes_var
             do
               echo $x
+              echo $tes_var2[$index]
+              ((index++))
             done
 
           changes=$(git diff --name-only main~ main folder1/)
