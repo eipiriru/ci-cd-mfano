@@ -19,7 +19,7 @@ jobs:
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
         run: |
           echo "${{ vars.TES_VAR }}"
-          tes_var=$(echo "${{ vars.TES_VAR }}" | jq -r)
+          tes_var=$(echo "${{ vars.TES_VAR }}" | jq -r '.kesatu[]')
           for x in $tes_var
             do
               echo $x
