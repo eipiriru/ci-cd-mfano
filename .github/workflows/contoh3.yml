@@ -1,0 +1,30 @@
+name: Update DB
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'folder1/**'
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Access Server by ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            changes=$(git diff --name-only main~ main folder1/)
+            for file in $changes
+              do
+                mysql -h ${{ secrets.DB_HOSTNAME }} --port {{ secrets.DB_PORT }} -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "source $file";
+                mysql -h ${{ secrets.DB_HOSTNAME }} --port {{ secrets.DB_PORT }} -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "INSERT INTO log_database ('name') values ($file)";
+              done
