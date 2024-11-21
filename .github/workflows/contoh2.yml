@@ -20,17 +20,10 @@ jobs:
         # uses: appleboy/ssh-action@master
         run: |
           tes_var=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kesatu[]')
-          tes_var2=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kedua[]')
-          echo $tes_var
-          echo $tes_var2
           index=0
           for x in $tes_var
             do
-              echo $index
               echo $x
-              echo ${tes_var[$index]}
-              echo ${tes_var2[$index]}
-              ((index++))
             done
 
           changes=$(git diff --name-only main~ main folder1/)
