@@ -1,0 +1,1 @@
+ALTER TABLE `random` ADD `jenis_kelamin` VARCHAR(20) NULL AFTER `alamat`;
