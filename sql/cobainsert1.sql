@@ -1,1 +1,1 @@
-INSERT INTO random(nama,alamat) VALUES ("Franz","Palembang")
+INSERT INTO random(nama,alamat) VALUES ("Giovani","Tennese")

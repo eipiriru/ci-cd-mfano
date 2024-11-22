@@ -11,7 +11,7 @@ pipeline {
         
         
         // Telegram Message Pre Build
-        TEXT_PRE_BUILD = "${JOB_NAME} is Building"
+        TEXT_PRE_BUILD = "${JOB_NAME} is Start"
 
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
@@ -31,8 +31,8 @@ pipeline {
                     changes=$(git diff --name-only main~ main sql/)
                     for i in $changes
                         do
-                          mysql -N -u ${CRED_USR} -p${CRED_PSW} ainur_tesdb -e "source $i"
-                          curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='Execute $i' --form chat_id='${CHAT_ID}'
+                          mysql -N -u ${CRED_USR} -p${CRED_PSW} jenkins_testdb -e "source $i"
+                          curl --location --request POST "https://api.telegram.org/bot${TOKEN}/sendMessage" --form text="Execute $i" --form chat_id="${CHAT_ID}"
                         done
                 ''')
             }
