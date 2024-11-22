@@ -1,0 +1,1 @@
+INSERT INTO random(nama,alamat) VALUES ("Andi","Papua")
