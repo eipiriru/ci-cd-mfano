@@ -17,10 +17,14 @@ pipeline {
                 sh "ls -l"
             }
         }
-        stage("try Insert Database"){
+        stage("Coba Insert Database dari File yang dipush"){
             steps {
                 sh(script:'''
-                    mysql -N -u ${CRED_USR} -p${CRED_PSW} ainur_tesdb -e "INSERT into random(nama,alamat) VALUES ('Bayu','Bandung')"
+                    changes=$(git diff --name-only main~ main sql/)
+                    for i in $changes
+                        do
+                          mysql -N -u ${CRED_USR} -p${CRED_PSW} ainur_tesdb -e "source $i"
+                        done
                 ''')
             }
         }
