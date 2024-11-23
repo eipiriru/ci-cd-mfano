@@ -1,1 +1,1 @@
-INSERT INTO random(nama,alamat) VALUES ("Iker Casillas","Madrid")
+INSERT INTO random(nama,alamat) VALUES ("Jawhead","Land of Dawn")
