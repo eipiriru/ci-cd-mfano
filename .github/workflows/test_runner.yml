@@ -20,11 +20,11 @@ jobs:
 
       - name: Update SQL di folder sql ke database
         run: |
-          curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="START UPDATE SQL" --form chat_id="${{ AINUR_TELE_ID }}"
+          curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="START UPDATE SQL" --form chat_id="${{ secrets.AINUR_TELE_ID }}"
           changes=$(git diff --name-only main~ main sql/)
             for file in $changes
               do
                 mysql -N -u ${{ secrets.USERNAME_DATABASE_TINKPED }} -p${{ secrets.PASSWORD_DATABASE_TINKPED }} jenkins_testdb -e "source $i"
-                curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="Execute $i" --form chat_id="${{ AINUR_TELE_ID }}"
+                curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="Execute $i" --form chat_id="${{ secrets.AINUR_TELE_ID }}"
               done
 
