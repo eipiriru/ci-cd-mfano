@@ -12,6 +12,9 @@ jobs:
     runs-on: 
       - self-hosted
       - label-tinkped
+    env:
+      USER_DB: ${{ secrets.USERNAME_DATABASE_TINKPED }}
+      PASS_DB: ${{ secrets.PASSWORD_DATABASE_TINKPED }}
     
     steps:
       - name: Checkout code
@@ -27,7 +30,7 @@ jobs:
           changes=$(git diff --name-only main~ main sql/)
             for file in $changes
               do
-                OUTPUT=$(mysql -N -u ${{ secrets.USERNAME_DATABASE_TINKPED }} -p${{ secrets.PASSWORD_DATABASE_TINKPED }} jenkins_testdb -e "source $file" 2>&1)
+                OUTPUT=$(mysql -N -u $USER_DB -p$PASS_DB jenkins_testdb -e "source $file" 2>&1)
                 EXIT_CODE=$?
                 if [ $EXIT_CODE -eq 0 ]; then curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="Execute $file Berhasil" --form chat_id="${{ secrets.AINUR_TELE_ID }}"; else curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="Execute $file GAGAL" --form chat_id="${{ secrets.AINUR_TELE_ID }}"; curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="$OUTPUT" --form chat_id="${{ secrets.AINUR_TELE_ID }}"; fi
               done
