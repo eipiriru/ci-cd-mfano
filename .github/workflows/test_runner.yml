@@ -12,7 +12,7 @@ jobs:
     runs-on: 
       - self-hosted
       - label-tinkped
-    continue-on-error: true
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,6 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Update SQL di folder sql ke database
+        continue-on-error: true
         run: |
           curl --location --request POST "https://api.telegram.org/bot${{ secrets.MFANO_TOKEN_BOT }}/sendMessage" --form text="START UPDATE SQL" --form chat_id="${{ secrets.AINUR_TELE_ID }}"
           changes=$(git diff --name-only main~ main sql/)
