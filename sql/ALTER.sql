@@ -1,1 +1,1 @@
-ALTER TABLE `random` ADD `ayah` VARCHAR(20) NULL AFTER `alamat`;
+ALTER TABLE `random` ADD `kakek` VARCHAR(20) NULL AFTER `alamat`;
