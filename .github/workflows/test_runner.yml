@@ -9,7 +9,7 @@ jobs:
   cek_pushan:
     runs-on: 
       - self-hosted
-      - label-tinkpad
+      - label-tinkped
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
