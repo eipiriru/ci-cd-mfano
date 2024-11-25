@@ -1,0 +1,23 @@
+name: Test Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cek_pushan:
+    runs-on: 
+      - self-hosted
+      - label-tinkpad
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Modified files
+        run: |
+          pwd
+          git diff --name-only --diff-filter=d main~ main
+
