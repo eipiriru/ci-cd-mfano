@@ -19,6 +19,7 @@ jobs:
       - name: Cek File di folder1 saja kalau kalau ada yang ditambah atau dimodifikasi
         # uses: appleboy/ssh-action@master
         run: |
+          pwd
           tes_var=$(echo "${{ secrets.TES_VAR }}" | jq -r '.kesatu[]')
           index=0
           for x in $tes_var

@@ -16,5 +16,6 @@ jobs:
 
       - name: Modified files
         run: |
+          pwd
           git diff --name-only --diff-filter=d main~ main
 
