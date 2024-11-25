@@ -1,0 +1,1 @@
+ALTER TABLE `randoma` ADD `kakak` VARCHAR(20) NULL AFTER `alamat`;
