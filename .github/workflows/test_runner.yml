@@ -28,7 +28,9 @@ jobs:
       - name: Update SQL di folder sql ke database
         continue-on-error: true
         run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           set +e
+          curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="COMMIT $COMMIT_MESSAGE" --form chat_id="$CHAT_ID"
           curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$CHAT_ID"
 
           METADATA_FILE="metadata_sql.json"
