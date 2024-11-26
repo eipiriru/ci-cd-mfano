@@ -35,8 +35,8 @@ jobs:
 
           for chat_id in "${chat_ids[@]}"; 
           do
-            curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="COMMIT $COMMIT_MESSAGE" --form chat_id="$chat_id""
-            curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$chat_id""
+            curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="COMMIT $COMMIT_MESSAGE" --form chat_id="$chat_id"
+            curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$chat_id"
           done
 
           METADATA_FILE="metadata_sql.json"
