@@ -1,6 +1,7 @@
 import subprocess
 import json
 from datetime import datetime
+import os
 
 METADATA_FILE = "metadata_sql.json"
 
@@ -27,6 +28,29 @@ def get_new_files():
     ]
     return new_files
 
+# Fungsi untuk mendapatkan create date file
+def get_create_date(file_path):
+    # create_time = os.stat(file_path).st_ctime
+    # return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
+
+    try:
+        # Menjalankan perintah stat untuk mendapatkan waktu pembuatan file
+        stat_output = subprocess.check_output(['stat', '--format=%W', file_path]).decode().strip()
+        
+        # Jika stat_output adalah '0', berarti tidak ada informasi 'create date'
+        if stat_output == '0':
+            # return None  # Tidak ada create date
+            create_time = os.stat(file_path).st_ctime
+            return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Mengonversi epoch timestamp menjadi datetime
+        create_time = datetime.fromtimestamp(int(stat_output))
+        return create_time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    except subprocess.CalledProcessError:
+        print(f"Error: unable to get file information for {file_path}")
+        return None
+
 # Fungsi utama untuk mencatat metadata
 def update_metadata():
     metadata = load_metadata()
@@ -34,9 +58,10 @@ def update_metadata():
 
     for file in new_files:
         if file not in metadata:
-            metadata[file] = {
-                "create_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }
+            try:
+                metadata[file] = get_create_date(file)
+            except FileNotFoundError:
+                print(f"File not found: {file}")
 
     save_metadata(metadata)
     print(f"Metadata diperbarui untuk {len(new_files)} file baru.")
