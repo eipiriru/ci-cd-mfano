@@ -2,6 +2,7 @@ import subprocess
 import json
 from datetime import datetime
 import os
+import platform
 
 METADATA_FILE = "metadata_sql.json"
 FOLDER_SQL = "sql/"
@@ -36,17 +37,27 @@ def get_create_date(file_path):
 
     try:
         # Menjalankan perintah stat untuk mendapatkan waktu pembuatan file
-        stat_output = subprocess.check_output(['stat', '--format=%W', file_path]).decode().strip()
-        
-        # Jika stat_output adalah '0', berarti tidak ada informasi 'create date'
-        if stat_output == '0':
-            # return None  # Tidak ada create date
+
+        # Linux
+        if platform.system() == "Linux":
+            stat_output = subprocess.check_output(['stat', '--format=%W', file_path]).decode().strip()
+            
+            # Jika stat_output adalah '0', berarti tidak ada informasi 'create date'
+            if stat_output == '0':
+                # return None  # Tidak ada create date
+                create_time = os.stat(file_path).st_ctime
+                return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
+            
+            # Mengonversi epoch timestamp menjadi datetime
+            create_time = datetime.fromtimestamp(int(stat_output))
+            return create_time.strftime("%Y-%m-%d %H:%M:%S")
+        elif platform.system() == "Windows":
+            import win32file
+            create_time = win32file.GetFileTime(win32file.CreateFile(file_path, 0, 0, None, win32file.OPEN_EXISTING, 0, None))[0]
+            return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
+        else:
             create_time = os.stat(file_path).st_ctime
             return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
-        
-        # Mengonversi epoch timestamp menjadi datetime
-        create_time = datetime.fromtimestamp(int(stat_output))
-        return create_time.strftime("%Y-%m-%d %H:%M:%S")
     
     except subprocess.CalledProcessError:
         print(f"Error: unable to get file information for {file_path}")
