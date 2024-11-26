@@ -16,7 +16,7 @@ jobs:
       USER_DB: ${{ secrets.USERNAME_DATABASE_TINKPED }}
       PASS_DB: ${{ secrets.PASSWORD_DATABASE_TINKPED }}
 
-      TOKEN_BOT: ${{ secrets.MFANO_TOKEN_BOT }}
+      TOKEN_BOT: ${{ secrets.LOGGITHUBSIMRSBOT }}
       CHAT_ID: ${{ secrets.AINUR_TELE_ID }}
     
     steps:
