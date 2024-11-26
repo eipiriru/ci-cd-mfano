@@ -32,12 +32,7 @@ def get_new_files():
 
 # Fungsi untuk mendapatkan create date file
 def get_create_date(file_path):
-    # create_time = os.stat(file_path).st_ctime
-    # return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
-
     try:
-        # Menjalankan perintah stat untuk mendapatkan waktu pembuatan file
-
         # Linux
         if platform.system() == "Linux":
             stat_output = subprocess.check_output(['stat', '--format=%W', file_path]).decode().strip()
