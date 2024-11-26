@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 path/to/metadata_sql_updater.py
+python3 metadata_sql_updater.py
