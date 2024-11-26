@@ -30,11 +30,33 @@ jobs:
         run: |
           set +e
           curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$CHAT_ID"
+
+          METADATA_FILE="metadata.json"
           changes=$(git diff --name-only main~ main sql/)
-            for file in $changes
-              do
-                OUTPUT=$(mysql -N -u $USER_DB -p$PASS_DB jenkins_testdb -e "source $file" 2>&1)
-                EXIT_CODE=$?
-                if [ $EXIT_CODE -eq 0 ]; then curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="Execute $file Berhasil" --form chat_id="$CHAT_ID"; else curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="Execute $file GAGAL" --form chat_id="$CHAT_ID"; curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="$OUTPUT" --form chat_id="$CHAT_ID"; fi
-              done
+
+          declare -A file_dates
+          while IFS="=" read -r key value; 
+            do
+              key=$(echo "$key" | tr -d ' "')
+              value=$(echo "$value" | tr -d ' ",')
+              file_dates["$key"]="$value"
+            done < <(jq -r 'to_entries[] | "\(.key)=\(.value)"' "$METADATA_FILE")
+
+          sorted_files=()
+          for file in $changes; 
+            do
+              if [[ -n "${file_dates[$file]}" ]]; then
+                sorted_files+=("${file_dates[$file]} $file")
+              fi
+            done
+
+          IFS=$'\n' sorted_files=($(printf "%s\n" "${sorted_files[@]}" | sort))
+
+          for entry in "${sorted_files[@]}";
+            do
+              file=$(echo "$entry" | awk '{print $2}')
+              OUTPUT=$(mysql -N -u $USER_DB -p$PASS_DB jenkins_testdb -e "source $file" 2>&1)
+              EXIT_CODE=$?
+              if [ $EXIT_CODE -eq 0 ]; then curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="Execute $file Berhasil" --form chat_id="$CHAT_ID"; else curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="Execute $file GAGAL" --form chat_id="$CHAT_ID"; curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="$OUTPUT" --form chat_id="$CHAT_ID"; fi
+            done
 
