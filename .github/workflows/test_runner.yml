@@ -31,7 +31,7 @@ jobs:
           set +e
           curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$CHAT_ID"
 
-          METADATA_FILE="metadata.json"
+          METADATA_FILE="metadata_sql.json"
           changes=$(git diff --name-only main~ main sql/)
 
           declare -A file_dates
