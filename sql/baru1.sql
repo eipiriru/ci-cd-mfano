@@ -1,0 +1,1 @@
+INSERT INTO random(nama,alamat) VALUES ("B4ru2","Konoha")
