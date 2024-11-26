@@ -1,2 +1,3 @@
 #!/bin/bash
 python3 metadata_sql_updater.py
+git add metadata_sql.json
