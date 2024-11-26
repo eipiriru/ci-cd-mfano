@@ -51,10 +51,6 @@ def get_create_date(file_path):
             # Mengonversi epoch timestamp menjadi datetime
             create_time = datetime.fromtimestamp(int(stat_output))
             return create_time.strftime("%Y-%m-%d %H:%M:%S")
-        elif platform.system() == "Windows":
-            import win32file
-            create_time = win32file.GetFileTime(win32file.CreateFile(file_path, 0, 0, None, win32file.OPEN_EXISTING, 0, None))[0]
-            return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
         else:
             create_time = os.stat(file_path).st_ctime
             return datetime.fromtimestamp(create_time).strftime("%Y-%m-%d %H:%M:%S")
