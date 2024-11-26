@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 
 METADATA_FILE = "metadata_sql.json"
+FOLDER_SQL = "sql/"
 
 # Fungsi untuk membaca metadata yang sudah ada
 def load_metadata():
@@ -20,7 +21,7 @@ def save_metadata(metadata):
 
 # Fungsi untuk mendapatkan file baru dari git diff
 def get_new_files():
-    result = subprocess.check_output(["git", "diff", "--cached", "--name-status"]).decode("utf-8")
+    result = subprocess.check_output(["git", "diff", "--cached", "--name-status", FOLDER_SQL]).decode("utf-8")
     new_files = [
         line.split("\t")[1]
         for line in result.strip().split("\n")
