@@ -1,1 +1,1 @@
-INSERT INTO random(nama,alamatnya) VALUES ("BBBb","Konoha")
+INSERT INTO random(nama,alamatnya) VALUES ("INSERT 2","Konoha")
