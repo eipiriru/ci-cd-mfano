@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# copy file ini ke .git/hooks
+
+# python
+python3 metadata_sql_updater.py
+git add metadata_sql.json
+
+# bash
+# bash metadata_sql_updater.sh
+# git add metadata_sql.json
