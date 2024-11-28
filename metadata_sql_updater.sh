@@ -18,13 +18,7 @@ get_new_files() {
 # Fungsi untuk mendapatkan create date (Unix timestamp) file
 get_create_date() {
   local file="$1"
-  if stat --version &>/dev/null; then
-    # GNU stat
-    stat --format='%W' "$file"
-  else
-    # BSD stat (macOS)
-    stat -f '%B' "$file"
-  fi
+  stat --format='%W' "$file"
 }
 
 # Fungsi utama untuk memperbarui metadata
