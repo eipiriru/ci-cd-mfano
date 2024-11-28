@@ -18,6 +18,8 @@ jobs:
 
       TOKEN_BOT: ${{ secrets.LOGGITHUBSIMRSBOT }}
       CHAT_IDS: ${{ secrets.TELE_IDS }}
+
+      METADATA_FILE: "metadata_sql.json"
     
     steps:
       - name: Checkout code
@@ -39,7 +41,6 @@ jobs:
             curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$chat_id"
           done
 
-          METADATA_FILE="metadata_sql.json"
           changes=$(git diff --name-only main~ main sql/)
 
           declare -A file_dates
