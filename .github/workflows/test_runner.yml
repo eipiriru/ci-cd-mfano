@@ -11,7 +11,7 @@ jobs:
   cek_pushan:
     runs-on: 
       - self-hosted
-      - gh-runner-tinkped
+      - label-tinkped
 
     env:
       USER_DB: ${{ secrets.USERNAME_DATABASE_TINKPED }}
