@@ -47,7 +47,7 @@ jobs:
             curl --location --request POST "https://api.telegram.org/bot$TOKEN_BOT/sendMessage" --form text="START UPDATE SQL" --form chat_id="$chat_id"
           done
 
-          changes=$(git diff --name-only main~ main sql/)
+          changes=$(git diff --name-only dev~ dev sql/)
 
           declare -A file_dates
           while IFS="=" read -r key value; 
