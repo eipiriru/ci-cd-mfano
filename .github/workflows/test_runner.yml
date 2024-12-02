@@ -10,6 +10,7 @@ on:
 jobs:
   cek_pushan:
     runs-on: 
+      - self-hosted
       - gh-runner-tinkped
 
     env:
