@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'sql/**'
+    # paths:
+    #   - 'sql/**'
 
 jobs:
   cek_pushan:
@@ -26,8 +26,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: '/var/www/html'
           fetch-depth: 0
+
+      - name: Auto Pull Code
+        run: |
+          cd /var/www/html/ci-cd-mfano
+          git pull origin main
 
       - name: Update SQL di folder sql ke database
         continue-on-error: true
