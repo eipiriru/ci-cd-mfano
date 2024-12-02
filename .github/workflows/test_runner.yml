@@ -10,8 +10,8 @@ on:
 jobs:
   cek_pushan:
     runs-on: 
-      - self-hosted
-      - label-tinkped
+      - gh-runner-tinkped
+
     env:
       USER_DB: ${{ secrets.USERNAME_DATABASE_TINKPED }}
       PASS_DB: ${{ secrets.PASSWORD_DATABASE_TINKPED }}
@@ -25,6 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          path: '/var/www/html'
           fetch-depth: 0
 
       - name: Update SQL di folder sql ke database
